@@ -11,6 +11,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MealsUtil {
+
+    static Map<LocalDate,Integer > mapDay = new HashMap<>();
+
     private static final int DEFAULT_CALORIES_PER_DAY = 2000;
     public static void main(String[] args) {
 
@@ -22,9 +25,15 @@ public class MealsUtil {
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 600),
                 new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510)
         );
+        System.out.println("getFilteredWithExcess: ");
         List<MealTo> mealsWithExcess = getFilteredWithExcess(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
         mealsWithExcess.forEach(System.out::println);
-        System.out.println("Hello");
+
+        System.out.println("getFilteredWithExcessByRecursion: ");
+        List<MealTo> mealsWithExcessRec = getFilteredWithExcessByRecursion(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
+        mealsWithExcessRec.forEach(System.out::println);
+
+        System.out.println("getFilteredWithExcessByCycle: ");
         System.out.println(getFilteredWithExcessByCycle(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
     }
 
@@ -57,5 +66,26 @@ public class MealsUtil {
 
     private static MealTo createWithExcess(Meal meal, boolean excess) {
         return new MealTo(meal.getDateTime(), meal.getDescription(), meal.getCalories(), excess);
+    }
+
+    public static List <MealTo> getFilteredWithExcessByRecursion(List<Meal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+
+        List<MealTo> list = new ArrayList<>();
+
+        mapDay.merge(meals.get(0).getDateTime().toLocalDate(), meals.get(0).getCalories(), (a, b) -> a + b);
+        if (meals.size() > 1){
+            list.addAll(getFilteredWithExcessByRecursion(meals.subList(1, meals.size()), startTime, endTime, caloriesPerDay));
+
+        }
+        LocalTime time = meals.get(0).getDateTime().toLocalTime();
+        if (TimeUtil.isBetween(time, startTime, endTime)){
+            list.add(new MealTo(meals.get(0).getDateTime(),
+                    meals.get(0).getDescription(),
+                    meals.get(0).getCalories(),
+                    mapDay.get(meals.get(0).getDateTime().toLocalDate()) <= caloriesPerDay));
+        }
+
+        return list;
+
     }
 }
