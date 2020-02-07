@@ -1,4 +1,4 @@
-package info.javalab.inutrihelp.model;
+package info.javalab.inutrihelp.to;
 
 import java.time.LocalDateTime;
 

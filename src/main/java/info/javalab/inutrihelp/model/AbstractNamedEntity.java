@@ -1,6 +1,6 @@
 package info.javalab.inutrihelp.model;
 
-public abstract class AbstractNamedEntity extends AbstractBaseEntity{
+public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     protected String name;
 
@@ -21,5 +21,4 @@ public abstract class AbstractNamedEntity extends AbstractBaseEntity{
     public String toString() {
         return super.toString() + '(' + name + ')';
     }
-
 }

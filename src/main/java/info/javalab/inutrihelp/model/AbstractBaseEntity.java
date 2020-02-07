@@ -1,7 +1,6 @@
 package info.javalab.inutrihelp.model;
 
 public abstract class AbstractBaseEntity {
-
     protected Integer id;
 
     protected AbstractBaseEntity(Integer id) {
@@ -24,5 +23,4 @@ public abstract class AbstractBaseEntity {
     public String toString() {
         return getClass().getSimpleName() + ":" + id;
     }
-
 }
