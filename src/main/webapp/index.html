@@ -3,12 +3,16 @@
     <meta charset="UTF-8">
     <title>Inutrihelp</title>
 </head>
-<body>
-<h3>Project <a href="https://github.com/glissovskiy/inutrihelp" target="_blank">Inutrihelp</a></h3>
-<hr>
-<ul>
-    <li><a href="users">Users</a></li>
-    <li><a href="meals">Meals</a></li>
-</ul>
-</body>
+    <body>
+    <h3>Project <a href="https://github.com/glissovskiy/inutrihelp" target="_blank">Inutrihelp</a></h3>
+    <hr>
+        <form method="post" action="users">
+            <b>Meals of&nbsp;</b>
+            <select name="userId">
+                <option value="1">User</option>
+                <option value="2">Admin</option>
+            </select>
+            <button type="submit">Select</button>
+        </form>
+    </body>
 </html>
