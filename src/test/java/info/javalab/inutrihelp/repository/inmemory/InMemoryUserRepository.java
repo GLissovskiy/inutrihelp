@@ -1,5 +1,6 @@
 package info.javalab.inutrihelp.repository.inmemory;
 
+import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.User;
 import info.javalab.inutrihelp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -14,11 +15,17 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static info.javalab.inutrihelp.UserTestData.ADMIN;
+import static info.javalab.inutrihelp.UserTestData.USER;
+
 @Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
-    static final int USER_ID = 1;
-    static final int ADMIN_ID = 2;
+    public void init() {
+        map.clear();
+        map.put(UserTestData.USER_ID, USER);
+        map.put(UserTestData.ADMIN_ID, ADMIN);
+    }
 
     @Override
     public List<User> getAll() {

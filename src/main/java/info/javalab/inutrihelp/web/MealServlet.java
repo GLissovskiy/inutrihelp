@@ -1,12 +1,7 @@
 package info.javalab.inutrihelp.web;
 
 import info.javalab.inutrihelp.model.Meal;
-import info.javalab.inutrihelp.repository.MealRepository;
-import info.javalab.inutrihelp.repository.inmemory.InMemoryMealRepository;
-import info.javalab.inutrihelp.util.MealsUtil;
 import info.javalab.inutrihelp.web.meal.MealRestController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;

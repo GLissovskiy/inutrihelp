@@ -2,7 +2,6 @@ package info.javalab.inutrihelp;
 
 import info.javalab.inutrihelp.model.Role;
 import info.javalab.inutrihelp.model.User;
-import info.javalab.inutrihelp.repository.UserRepository;
 import info.javalab.inutrihelp.to.MealTo;
 import info.javalab.inutrihelp.web.meal.MealRestController;
 import info.javalab.inutrihelp.web.user.AdminRestController;
@@ -27,8 +26,8 @@ public class SpringMain {
             MealRestController mealController = appCtx.getBean(MealRestController.class);
             List<MealTo> filteredMealsWithExcess =
                     mealController.getBetween(
-                            LocalDate.of(2016, Month.MAY, 30), LocalTime.of(7, 0),
-                            LocalDate.of(2016, Month.MAY, 31), LocalTime.of(11, 0));
+                            LocalDate.of(2015, Month.MAY, 30), LocalTime.of(7, 0),
+                            LocalDate.of(2015, Month.MAY, 31), LocalTime.of(11, 0));
             filteredMealsWithExcess.forEach(System.out::println);
         }
     }
