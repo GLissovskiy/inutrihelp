@@ -1,13 +1,18 @@
 package info.javalab.inutrihelp.web.user;
 
-import org.junit.*;
-
 import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.User;
 import info.javalab.inutrihelp.repository.inmemory.InMemoryUserRepository;
 import info.javalab.inutrihelp.util.exception.NotFoundException;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import org.junit.*;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,3 +55,4 @@ public class InMemoryAdminRestControllerTest {
         controller.delete(10);
     }
 }
+
