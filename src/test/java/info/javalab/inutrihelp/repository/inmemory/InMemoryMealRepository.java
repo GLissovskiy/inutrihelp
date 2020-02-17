@@ -46,7 +46,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @PostConstruct
     public void postConstruct() {
-        log.info("+++ PostConstruct");
+        log.info("++++ PostConstruct");
     }
 
     @PreDestroy
