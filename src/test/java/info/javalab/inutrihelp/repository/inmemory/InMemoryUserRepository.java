@@ -1,19 +1,14 @@
 package info.javalab.inutrihelp.repository.inmemory;
 
+import org.springframework.stereotype.Repository;
 import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.User;
 import info.javalab.inutrihelp.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+
 
 import static info.javalab.inutrihelp.UserTestData.ADMIN;
 import static info.javalab.inutrihelp.UserTestData.USER;

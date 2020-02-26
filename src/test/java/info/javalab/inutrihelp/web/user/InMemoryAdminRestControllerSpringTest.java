@@ -2,22 +2,20 @@ package info.javalab.inutrihelp.web.user;
 
 
 import info.javalab.inutrihelp.UserTestData;
-        import info.javalab.inutrihelp.model.User;
-        import info.javalab.inutrihelp.repository.inmemory.InMemoryUserRepository;
-        import info.javalab.inutrihelp.util.exception.NotFoundException;
-        import org.junit.runner.RunWith;
+import info.javalab.inutrihelp.model.User;
+import info.javalab.inutrihelp.repository.inmemory.InMemoryUserRepository;
+import info.javalab.inutrihelp.util.exception.NotFoundException;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
-        import org.junit.Assert;
-        import org.junit.Before;
-        import org.junit.Test;
-        import org.junit.runner.RunWith;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.test.context.ContextConfiguration;
-        import org.springframework.test.context.junit4.SpringRunner;
+import java.util.Collection;
 
-        import java.util.Collection;
-
-        import static info.javalab.inutrihelp.UserTestData.ADMIN;
+import static info.javalab.inutrihelp.UserTestData.ADMIN;
 
 @ContextConfiguration("classpath:spring/spring-app.xml")
 @RunWith(SpringRunner.class)
@@ -47,3 +45,4 @@ public class InMemoryAdminRestControllerSpringTest {
         controller.delete(10);
     }
 }
+

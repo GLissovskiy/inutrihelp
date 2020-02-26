@@ -1,24 +1,22 @@
 package info.javalab.inutrihelp.service;
 
-import info.javalab.inutrihelp.model.User;
-import info.javalab.inutrihelp.model.Role;
+
 import info.javalab.inutrihelp.util.exception.NotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import info.javalab.inutrihelp.model.User;
+import info.javalab.inutrihelp.model.Role;
 
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import static info.javalab.inutrihelp.UserTestData.*;
-import static org.junit.Assert.*;
+
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -28,32 +26,28 @@ import static org.junit.Assert.*;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
-    static {
-        // Only for postgres driver logging
-        // It uses java.util.logging and logged via jul-to-slf4j bridge
-        SLF4JBridgeHandler.install();
-    }
-
     @Autowired
     private UserService service;
 
     @Test
     public void create() throws Exception {
-        User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, new Date(), Collections.singleton(Role.ROLE_USER));
+        User newUser = getNew();
         User created = service.create(newUser);
-        newUser.setId(created.getId());
-        assertMatch(service.getAll(), ADMIN, newUser, USER);
+        Integer newId = created.getId();
+        newUser.setId(newId);
+        assertMatch(created, newUser);
+        assertMatch(service.get(newId), newUser);
     }
 
     @Test(expected = DataAccessException.class)
     public void duplicateMailCreate() throws Exception {
-        service.create(new User(null, "Duplicate", "user@yahoo.com", "newPass", Role.ROLE_USER));
+        service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
     }
 
-    @Test
+    @Test(expected = NotFoundException.class)
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertMatch(service.getAll(), ADMIN);
+        service.get(USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
@@ -74,15 +68,13 @@ public class UserServiceTest {
 
     @Test
     public void getByEmail() throws Exception {
-        User user = service.getByEmail("user@gmail.com");
+        User user = service.getByEmail("user@yandex.ru");
         assertMatch(user, USER);
     }
 
     @Test
     public void update() throws Exception {
-        User updated = new User(USER);
-        updated.setName("UpdatedName");
-        updated.setCaloriesPerDay(330);
+        User updated = getUpdated();
         service.update(updated);
         assertMatch(service.get(USER_ID), updated);
     }
