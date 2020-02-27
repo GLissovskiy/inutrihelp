@@ -1,5 +1,6 @@
 package info.javalab.inutrihelp.repository.inmemory;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.User;
@@ -13,7 +14,8 @@ import java.util.stream.Collectors;
 import static info.javalab.inutrihelp.UserTestData.ADMIN;
 import static info.javalab.inutrihelp.UserTestData.USER;
 
-@org.springframework.stereotype.Repository
+
+@Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
     public void init() {

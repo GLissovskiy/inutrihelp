@@ -19,7 +19,8 @@ import java.util.Collection;
 import static info.javalab.inutrihelp.UserTestData.ADMIN;
 
 //@ComponentScan
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ComponentScan
+//@ContextConfiguration("classpath:spring/spring-app.xml")
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 
