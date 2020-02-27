@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static info.javalab.inutrihelp.UserTestData.ADMIN;
 import static info.javalab.inutrihelp.UserTestData.USER;
 
-@Repository
+@org.springframework.stereotype.Repository
 public class InMemoryUserRepository extends InMemoryBaseRepository<User> implements UserRepository {
 
     public void init() {

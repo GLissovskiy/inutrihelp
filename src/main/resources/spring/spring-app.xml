@@ -17,8 +17,10 @@
 
     <context:component-scan base-package="info.javalab.**.repository.jdbc"/>
 
+
     <context:component-scan base-package="info.javalab.**.service"/>
 
     <context:component-scan base-package="info.javalab.**.web"/>
+    <context:component-scan base-package="info.javalab.**.web.user"/>
 
 </beans>
