@@ -2,13 +2,12 @@ package info.javalab.inutrihelp;
 
 import info.javalab.inutrihelp.model.Role;
 import info.javalab.inutrihelp.model.User;
+import info.javalab.inutrihelp.repository.inmemory.TestMatcher;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
 import static info.javalab.inutrihelp.model.AbstractBaseEntity.START_SEQ;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
     public static final int USER_ID = START_SEQ;
@@ -28,15 +27,5 @@ public class UserTestData {
         return updated;
     }
 
-    public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "roles");
-    }
-
-    public static void assertMatch(Iterable<User> actual, User... expected) {
-        assertMatch(actual, Arrays.asList(expected));
-    }
-
-    public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "roles").isEqualTo(expected);
-    }
+    public static TestMatcher<User> USER_MATCHER = TestMatcher.of("registered", "roles");
 }

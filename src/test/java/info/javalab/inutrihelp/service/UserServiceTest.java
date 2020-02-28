@@ -22,7 +22,8 @@ import static info.javalab.inutrihelp.UserTestData.*;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"})
+        "classpath:spring/spring-db.xml"
+})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
@@ -35,62 +36,61 @@ public class UserServiceTest {
 
     @Autowired
     private UserService service;
-
     @Autowired
     private UserRepository repository;
 
     @Test
-    public void create() throws Exception {
+    public void create() {
         User newUser = getNew();
         User created = service.create(newUser);
         Integer newId = created.getId();
         newUser.setId(newId);
-        assertMatch(created, newUser);
-        assertMatch(service.get(newId), newUser);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(service.get(newId), newUser);
     }
 
     @Test(expected = DataAccessException.class)
-    public void duplicateMailCreate() throws Exception {
+    public void duplicateMailCreate() {
         service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
     }
 
-    public void delete() throws Exception {
+    public void delete() {
         service.delete(USER_ID);
         Assert.assertNull(repository.get(USER_ID));
     }
 
     @Test(expected = NotFoundException.class)
-    public void deletedNotFound() throws Exception {
+    public void deletedNotFound() {
         service.delete(1);
     }
 
     @Test
-    public void get() throws Exception {
+    public void get() {
         User user = service.get(USER_ID);
-        assertMatch(user, USER);
+        USER_MATCHER.assertMatch(user, USER);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNotFound() throws Exception {
+    public void getNotFound() {
         service.get(1);
     }
 
     @Test
-    public void getByEmail() throws Exception {
+    public void getByEmail() {
         User user = service.getByEmail("user@yandex.ru");
-        assertMatch(user, USER);
+        USER_MATCHER.assertMatch(user, USER);
     }
 
     @Test
-    public void update() throws Exception {
+    public void update() {
         User updated = getUpdated();
         service.update(updated);
-        assertMatch(service.get(USER_ID), updated);
+        USER_MATCHER.assertMatch(service.get(USER_ID), updated);
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() {
         List<User> all = service.getAll();
-        assertMatch(all, ADMIN, USER);
+        USER_MATCHER.assertMatch(all, ADMIN, USER);
     }
 }

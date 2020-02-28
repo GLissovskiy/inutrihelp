@@ -1,8 +1,9 @@
 package info.javalab.inutrihelp.repository.inmemory;
 
+import info.javalab.inutrihelp.MealTestData;
+import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.Meal;
 import info.javalab.inutrihelp.repository.MealRepository;
-import info.javalab.inutrihelp.util.MealsUtil;
 import info.javalab.inutrihelp.util.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,16 +12,11 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
-import static info.javalab.inutrihelp.UserTestData.ADMIN_ID;
-import static info.javalab.inutrihelp.UserTestData.USER_ID;
-
 
 
 @Repository
@@ -31,9 +27,9 @@ public class InMemoryMealRepository implements MealRepository {
     private Map<Integer, InMemoryBaseRepository<Meal>> usersMealsMap = new ConcurrentHashMap<>();
 
     {
-        MealsUtil.MEALS.forEach(meal -> save(meal, USER_ID));
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
-        save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
+        InMemoryBaseRepository<Meal> userMeals = new InMemoryBaseRepository<>();
+        MealTestData.MEALS.forEach(meal -> userMeals.map.put(meal.getId(), meal));
+        usersMealsMap.put(UserTestData.USER_ID, userMeals);
     }
 
 
