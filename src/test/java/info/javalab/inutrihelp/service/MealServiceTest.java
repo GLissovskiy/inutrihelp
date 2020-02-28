@@ -6,7 +6,6 @@ import info.javalab.inutrihelp.util.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -28,33 +27,29 @@ import static info.javalab.inutrihelp.UserTestData.USER_ID;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
 
-    static {
-        SLF4JBridgeHandler.install();
-    }
-
     @Autowired
     private MealService service;
     @Autowired
     private MealRepository repository;
 
     @Test
-    public void delete() {
+    public void delete() throws Exception {
         service.delete(MEAL1_ID, USER_ID);
         Assert.assertNull(repository.get(MEAL1_ID, USER_ID));
     }
 
     @Test(expected = NotFoundException.class)
-    public void deleteNotFound() {
+    public void deleteNotFound() throws Exception {
         service.delete(1, USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
-    public void deleteNotOwn() {
+    public void deleteNotOwn() throws Exception {
         service.delete(MEAL1_ID, ADMIN_ID);
     }
 
     @Test
-    public void create() {
+    public void create() throws Exception {
         Meal newMeal = getCreated();
         Meal created = service.create(newMeal, USER_ID);
         Integer newId = created.getId();
@@ -64,40 +59,40 @@ public class MealServiceTest {
     }
 
     @Test
-    public void get() {
+    public void get() throws Exception {
         Meal actual = service.get(ADMIN_MEAL_ID, ADMIN_ID);
         MEAL_MATCHER.assertMatch(actual, ADMIN_MEAL1);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNotFound() {
+    public void getNotFound() throws Exception {
         service.get(1, USER_ID);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNotOwn() {
+    public void getNotOwn() throws Exception {
         service.get(MEAL1_ID, ADMIN_ID);
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception {
         Meal updated = getUpdated();
         service.update(updated, USER_ID);
         MEAL_MATCHER.assertMatch(service.get(MEAL1_ID, USER_ID), updated);
     }
 
     @Test(expected = NotFoundException.class)
-    public void updateNotFound() {
+    public void updateNotFound() throws Exception {
         service.update(MEAL1, ADMIN_ID);
     }
 
     @Test
-    public void getAll() {
+    public void getAll() throws Exception {
         MEAL_MATCHER.assertMatch(service.getAll(USER_ID), MEALS);
     }
 
     @Test
-    public void getBetweenInclusive() {
+    public void getBetweenInclusive() throws Exception {
         MEAL_MATCHER.assertMatch(service.getBetweenInclusive(
                 LocalDate.of(2020, Month.JANUARY, 30),
                 LocalDate.of(2020, Month.JANUARY, 30), USER_ID),
@@ -105,7 +100,7 @@ public class MealServiceTest {
     }
 
     @Test
-    public void getBetweenWithNullDates() {
+    public void getBetweenWithNullDates() throws Exception {
         MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), MEALS);
     }
 }

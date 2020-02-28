@@ -3,7 +3,6 @@ package info.javalab.inutrihelp.service;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,19 +27,13 @@ import static info.javalab.inutrihelp.UserTestData.*;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
-    static {
-        // Only for postgres driver logging
-        // It uses java.util.logging and logged via jul-to-slf4j bridge
-        SLF4JBridgeHandler.install();
-    }
-
     @Autowired
     private UserService service;
     @Autowired
     private UserRepository repository;
 
     @Test
-    public void create() {
+    public void create() throws Exception {
         User newUser = getNew();
         User created = service.create(newUser);
         Integer newId = created.getId();
@@ -50,46 +43,46 @@ public class UserServiceTest {
     }
 
     @Test(expected = DataAccessException.class)
-    public void duplicateMailCreate() {
+    public void duplicateMailCreate() throws Exception {
         service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
     }
 
-    public void delete() {
+    public void delete() throws Exception {
         service.delete(USER_ID);
         Assert.assertNull(repository.get(USER_ID));
     }
 
     @Test(expected = NotFoundException.class)
-    public void deletedNotFound() {
+    public void deletedNotFound() throws Exception {
         service.delete(1);
     }
 
     @Test
-    public void get() {
+    public void get() throws Exception {
         User user = service.get(USER_ID);
         USER_MATCHER.assertMatch(user, USER);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getNotFound() {
+    public void getNotFound() throws Exception {
         service.get(1);
     }
 
     @Test
-    public void getByEmail() {
+    public void getByEmail() throws Exception {
         User user = service.getByEmail("user@yandex.ru");
         USER_MATCHER.assertMatch(user, USER);
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception {
         User updated = getUpdated();
         service.update(updated);
         USER_MATCHER.assertMatch(service.get(USER_ID), updated);
     }
 
     @Test
-    public void getAll() {
+    public void getAll() throws Exception {
         List<User> all = service.getAll();
         USER_MATCHER.assertMatch(all, ADMIN, USER);
     }
