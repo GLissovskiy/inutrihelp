@@ -3,7 +3,6 @@ package info.javalab.inutrihelp.repository;
 import info.javalab.inutrihelp.model.Meal;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 public interface MealRepository {
