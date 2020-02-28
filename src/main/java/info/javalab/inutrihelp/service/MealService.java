@@ -2,14 +2,14 @@ package info.javalab.inutrihelp.service;
 
 import info.javalab.inutrihelp.model.Meal;
 import info.javalab.inutrihelp.repository.MealRepository;
-import info.javalab.inutrihelp.util.DateTimeUtil;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
+import static info.javalab.inutrihelp.util.DateTimeUtil.atStartOfDayOrMin;
+import static info.javalab.inutrihelp.util.DateTimeUtil.atStartOfNextDayOrMax;
 import static info.javalab.inutrihelp.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -29,10 +29,8 @@ public class MealService {
         checkNotFoundWithId(repository.delete(id, userId), id);
     }
 
-    public List<Meal> getBetweenDates(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
-        return repository.getBetween(
-                DateTimeUtil.createDateTime(startDate, LocalDate.MIN, LocalTime.MIN),
-                DateTimeUtil.createDateTime(endDate, LocalDate.MAX, LocalTime.MAX), userId);
+    public List<Meal> getBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int userId) {
+        return repository.getBetweenHalfOpen(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
 
     public List<Meal> getAll(int userId) {

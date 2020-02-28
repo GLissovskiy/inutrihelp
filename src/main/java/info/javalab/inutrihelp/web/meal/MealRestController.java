@@ -24,7 +24,6 @@ public class MealRestController {
 
     private final MealService service;
 
-    @Autowired
     public MealRestController(MealService service) {
         this.service = service;
     }
@@ -72,7 +71,7 @@ public class MealRestController {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime, endTime, userId);
 
-        List<Meal> mealsDateFiltered = service.getBetweenDates(startDate, endDate, userId);
+        List<Meal> mealsDateFiltered = service.getBetweenInclusive(startDate, endDate, userId);
         return MealsUtil.getFilteredTos(mealsDateFiltered, SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
     }
 }

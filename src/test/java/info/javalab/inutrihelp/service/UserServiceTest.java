@@ -1,15 +1,17 @@
 package info.javalab.inutrihelp.service;
 
-
-import info.javalab.inutrihelp.util.exception.NotFoundException;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import info.javalab.inutrihelp.repository.UserRepository;
+import info.javalab.inutrihelp.util.exception.NotFoundException;
 import info.javalab.inutrihelp.model.User;
 import info.javalab.inutrihelp.model.Role;
 
@@ -18,13 +20,24 @@ import java.util.List;
 import static info.javalab.inutrihelp.UserTestData.*;
 
 
-@ContextConfiguration({"/spring/spring-app.xml","/spring/spring-db.xml"})
+@ContextConfiguration({
+        "classpath:spring/spring-app.xml",
+        "classpath:spring/spring-db.xml"})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
 
+    static {
+        // Only for postgres driver logging
+        // It uses java.util.logging and logged via jul-to-slf4j bridge
+        SLF4JBridgeHandler.install();
+    }
+
     @Autowired
     private UserService service;
+
+    @Autowired
+    private UserRepository repository;
 
     @Test
     public void create() throws Exception {
@@ -41,10 +54,9 @@ public class UserServiceTest {
         service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
     }
 
-    @Test(expected = NotFoundException.class)
     public void delete() throws Exception {
         service.delete(USER_ID);
-        service.get(USER_ID);
+        Assert.assertNull(repository.get(USER_ID));
     }
 
     @Test(expected = NotFoundException.class)
