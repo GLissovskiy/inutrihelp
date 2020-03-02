@@ -2,7 +2,6 @@ package info.javalab.inutrihelp;
 
 import info.javalab.inutrihelp.model.Role;
 import info.javalab.inutrihelp.model.User;
-import info.javalab.inutrihelp.repository.inmemory.TestMatcher;
 
 import java.util.Collections;
 import java.util.Date;

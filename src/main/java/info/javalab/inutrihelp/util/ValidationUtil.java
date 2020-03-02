@@ -5,8 +5,12 @@ import info.javalab.inutrihelp.util.exception.NotFoundException;
 
 public class ValidationUtil {
 
+    private ValidationUtil() {
+    }
+
     public static <T> T checkNotFoundWithId(T object, int id) {
-        return checkNotFound(object, "id=" + id);
+        checkNotFoundWithId(object != null, id);
+        return object;
     }
 
     public static void checkNotFoundWithId(boolean found, int id) {

@@ -1,4 +1,4 @@
-package info.javalab.inutrihelp.repository.inmemory;
+package info.javalab.inutrihelp;
 
 import java.util.Arrays;
 

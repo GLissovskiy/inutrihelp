@@ -1,6 +1,5 @@
 package info.javalab.inutrihelp.repository.inmemory;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import info.javalab.inutrihelp.UserTestData;
 import info.javalab.inutrihelp.model.User;
@@ -8,6 +7,7 @@ import info.javalab.inutrihelp.repository.UserRepository;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -33,6 +33,7 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
 
     @Override
     public User getByEmail(String email) {
+        Objects.requireNonNull(email, "email must not be null");
         return getCollection().stream()
                 .filter(u -> email.equals(u.getEmail()))
                 .findFirst()
