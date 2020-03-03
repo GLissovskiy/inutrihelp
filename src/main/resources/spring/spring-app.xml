@@ -15,7 +15,7 @@
     <!-- Not necessary, already included with component-scan -->
     <!--<context:annotation-config/>-->
 
-    <context:component-scan base-package="info.javalab.**.repository.jdbc"/>
+    <!--<context:component-scan base-package="info.javalab.**.repository.jdbc"/>-->
 
 
     <context:component-scan base-package="info.javalab.**.service"/>
