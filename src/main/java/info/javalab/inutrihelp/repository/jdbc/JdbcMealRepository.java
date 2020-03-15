@@ -33,7 +33,6 @@ public class JdbcMealRepository implements MealRepository {
                 .usingGeneratedKeyColumns("id");
 
         this.jdbcTemplate = jdbcTemplate;
-
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
