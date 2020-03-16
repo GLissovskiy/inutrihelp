@@ -32,6 +32,7 @@ public class JdbcUserRepository implements UserRepository {
 
 
         this.jdbcTemplate = jdbcTemplate;
+
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 
     }
