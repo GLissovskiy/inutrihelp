@@ -30,6 +30,7 @@ public class JdbcUserRepository implements UserRepository {
                 .withTableName("users")
                 .usingGeneratedKeyColumns("id");
 
+
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 
